@@ -2,11 +2,13 @@ import * as THREE from 'three';
 import { Renderer } from './Renderer';
 import { Camera } from './Camera';
 import { player } from './Player';
+import { map } from './Map';
 
 import './style.css';
 
 const scene = new THREE.Scene();
 scene.add(player);
+scene.add(map);
 
 const ambienteLight = new THREE.AmbientLight();
 scene.add(ambienteLight);
