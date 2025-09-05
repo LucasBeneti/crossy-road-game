@@ -13,11 +13,25 @@ type MetadataType = Array<
       type: 'car';
       direction: boolean;
       speed: number;
-      vehicles: Array<{ initialTileIndex: number; color: number }>;
+      vehicles: Array<{
+        ref?: THREE.Group<THREE.Object3DEventMap>;
+        initialTileIndex: number;
+        color: number;
+      }>;
     }
 >;
 
 export const metadata: MetadataType = [
+  {
+    type: 'car',
+    direction: false,
+    speed: 188,
+    vehicles: [
+      { initialTileIndex: -4, color: 0xbdb638 },
+      { initialTileIndex: -1, color: 0x78b14b },
+      { initialTileIndex: 4, color: 0xa52523 },
+    ],
+  },
   {
     type: 'forest',
     trees: [
@@ -29,8 +43,26 @@ export const metadata: MetadataType = [
   {
     type: 'car',
     direction: false,
-    speed: 1,
+    speed: 10,
     vehicles: [{ initialTileIndex: 2, color: 0xff0000 }],
+  },
+  {
+    type: 'car',
+    direction: true,
+    speed: 125,
+    vehicles: [
+      { initialTileIndex: -4, color: 0x78b14b },
+      { initialTileIndex: 0, color: 0xbdb638 },
+      { initialTileIndex: 5, color: 0xbdb638 },
+    ],
+  },
+  {
+    type: 'forest',
+    trees: [
+      { tileIndex: -8, height: 30 },
+      { tileIndex: -3, height: 50 },
+      { tileIndex: 2, height: 30 },
+    ],
   },
 ];
 
@@ -55,12 +87,14 @@ metadata.forEach((rowData, index) => {
 
   if (rowData.type === 'car') {
     const row = Road(rowIndex);
+
     rowData.vehicles.forEach((vehicle) => {
       const car = Car(
         vehicle.initialTileIndex,
         rowData.direction,
         vehicle.color
       );
+      vehicle.ref = car;
       row.add(car);
     });
     map.add(row);

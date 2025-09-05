@@ -3,6 +3,7 @@ import { Renderer } from './Renderer';
 import { Camera } from './Camera';
 import { player } from './Player';
 import { map } from './Map';
+import { animateVehicles } from './animations/vehicle';
 
 import './style.css';
 
@@ -21,4 +22,10 @@ const camera = Camera();
 player.add(camera);
 
 const renderer = Renderer();
-renderer.render(scene, camera);
+renderer.setAnimationLoop(animate);
+
+function animate() {
+  animateVehicles();
+
+  renderer.render(scene, camera);
+}
